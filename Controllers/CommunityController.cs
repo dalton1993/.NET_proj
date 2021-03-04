@@ -68,14 +68,18 @@ namespace Controllers
                             )
                             .ToListAsync();
 
-                            // .Include(u => u.CommunityMember)
-                            // .Include(p => p.Posts)
-                            // .ThenInclude(c => c.Comments)
-                            // .Include(p => p.Posts)
-                            // .ThenInclude(u => u.User)
-                            // .SingleOrDefaultAsync(u => u.CommunityId == id);
+            var comm = from u in _context.UserCommunities
+                        where u.CommunityId == id
+                        join p in _context.Users on u.UserId equals p.UserId
+                        join a in _context.Posts on u.CommunityId equals a.CommunityId
+                        select new 
+                        {
+                            
+                        };
 
-            return Ok(community);
+            var result = await comm.ToListAsync();
+
+            return Ok(result);
         }
     }
 }
