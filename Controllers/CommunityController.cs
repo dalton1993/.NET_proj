@@ -71,10 +71,10 @@ namespace Controllers
             var comm = from u in _context.UserCommunities
                         where u.CommunityId == id
                         join p in _context.Users on u.UserId equals p.UserId
-                        join a in _context.Posts on u.CommunityId equals a.CommunityId
                         select new 
                         {
-                            
+                            UserId = p.UserId,
+                            User = p.UserName
                         };
 
             var result = await comm.ToListAsync();
